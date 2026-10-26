@@ -1,0 +1,113 @@
+.map-canvas-wrap .map-canvas {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+.event-context {
+  position: absolute;
+  left: 20px;
+  top: 118px;
+  background: #fffffff0;
+  border: 1px solid #dce6ef;
+  border-radius: 4px;
+  font-size: 9px;
+  color: #6a85a0;
+  padding: 8px 10px;
+}
+.event-table {
+  margin-top: 12px;
+  font-size: 10px;
+  color: #8295ad;
+}
+.event-table summary {
+  cursor: pointer;
+}
+.event-table table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 12px;
+}
+.event-table td,
+.event-table th {
+  text-align: left;
+  padding: 8px;
+  border-bottom: 1px solid #e8edf3;
+  font-size: 9px;
+}
+.event-table td:first-child {
+  white-space: nowrap;
+}
+.maplibregl-popup-content {
+  font:
+    11px/1.7 "DM Sans",
+    sans-serif;
+  color: #536d8b;
+  max-width: 240px;
+}
+@media (min-width: 721px) and (max-width: 1100px) {
+  .app-shell {
+    height: auto;
+    min-height: 100dvh;
+    overflow: visible;
+  }
+  .mission-layout {
+    grid-template-columns: 250px minmax(0, 1fr);
+    grid-template-rows: minmax(650px, calc(100dvh - 152px)) auto;
+    flex: none;
+  }
+  .ranking-panel {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  .map-stage {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .evidence-panel {
+    position: static;
+    grid-column: 1/-1;
+    grid-row: 2;
+    width: auto;
+    max-height: none;
+    inset: auto;
+    border-radius: 0;
+    margin: 0;
+    padding: 0 28px 10px;
+    box-shadow: none;
+  }
+  .evidence-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+  .evidence-intro {
+    padding: 18px 0;
+  }
+  .evidence-panel .why p {
+    font-size: 12px;
+  }
+  .evidence-panel .neighbors button {
+    font-size: 11px;
+  }
+  .evidence-panel .verification {
+    max-width: 440px;
+  }
+  .evidence-panel .source-link {
+    max-width: 440px;
+  }
+  .evidence-panel .evidence-top {
+    height: 48px;
+  }
+  .evidence-panel .priority-block {
+    max-width: 440px;
+  }
+  .evidence-panel .evidence-equation {
+    max-width: 440px;
+    font-size: 10px;
+  }
+  .map-bottom-card p {
+    display: block;
+  }
+  .maplibregl-ctrl-bottom-right {
+    bottom: 105px !important;
+  }
+}

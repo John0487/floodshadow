@@ -1,0 +1,26 @@
+{
+  "retrievedAt": "2026-10-26T20:46:12.477Z",
+  "records": [
+    {
+      "id": "extra-20261026-urdesa",
+      "areaId": "municipal-35",
+      "areaName": "Urdesa",
+      "type": "water_accumulation",
+      "locationText": "Urdesa - area mentioned in a published report",
+      "coordinates": [
+        -79.90890947631277,
+        -2.1626383475582847
+      ],
+      "locationQuality": "area_reference",
+      "publishedAt": "2026-10-26T14:55:00-05:00",
+      "windowStart": "2026-10-25T00:00:00-05:00",
+      "windowEnd": "2026-10-27T00:00:00-05:00",
+      "observedAt": null,
+      "source": "https://www.extra.ec/noticia/guayaquil/tormenta-electrica-guayaquil-segura-ep-pide-permanecer-hogares-166090.html",
+      "publisher": "Diario Extra",
+      "description": "Flooding was reported in Urdesa during October 25-26. Exact streets and extent are not specified.",
+      "scope": "Named-area mention; no whole-area flooding confirmed",
+      "review": "Source checked; incident location not field verified"
+    }
+  ]
+}

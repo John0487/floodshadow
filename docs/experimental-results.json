@@ -1,0 +1,142 @@
+{
+  "generated": "2026-10-25T19:00:13.389Z",
+  "dataType": "synthetic incidents on official census geometry",
+  "limitation": "Shared environmental inputs create a favorable setup; no independent Guayaquil validation. No false-positive reports in simulator.",
+  "results": [
+    {
+      "scenario": "Uneven reporting",
+      "parameters": {
+        "id": 42,
+        "label": "Uneven reporting",
+        "rain": 95,
+        "coverage": 30,
+        "disparity": 70
+      },
+      "k": 5,
+      "singleEpisode": {
+        "traditional": {
+          "selected": 5,
+          "hits": 5,
+          "precision": 1,
+          "recall": 0.3333333333333333,
+          "hidden": 0,
+          "clusters": 1
+        },
+        "floodshadow": {
+          "selected": 5,
+          "hits": 2,
+          "precision": 0.4,
+          "recall": 0.13333333333333333,
+          "hidden": 1,
+          "clusters": 1
+        }
+      },
+      "benchmark": {
+        "traditional": {
+          "hits": 4.99999999999999,
+          "hidden": 0,
+          "precision": 1.0000000000000007,
+          "recall": 0.331256638969083
+        },
+        "floodshadow": {
+          "hits": 1.720000000000001,
+          "hidden": 0.8800000000000006,
+          "precision": 0.34400000000000025,
+          "recall": 0.10876208812500375
+        },
+        "runs": 100,
+        "hiddenWins": 61
+      }
+    },
+    {
+      "scenario": "Widespread observation",
+      "parameters": {
+        "id": 108,
+        "label": "Widespread observation",
+        "rain": 75,
+        "coverage": 75,
+        "disparity": 10
+      },
+      "k": 5,
+      "singleEpisode": {
+        "traditional": {
+          "selected": 5,
+          "hits": 5,
+          "precision": 1,
+          "recall": 0.29411764705882354,
+          "hidden": 0,
+          "clusters": 1
+        },
+        "floodshadow": {
+          "selected": 5,
+          "hits": 0,
+          "precision": 0,
+          "recall": 0,
+          "hidden": 0,
+          "clusters": 1
+        }
+      },
+      "benchmark": {
+        "traditional": {
+          "hits": 4.99999999999999,
+          "hidden": 0,
+          "precision": 1.0000000000000007,
+          "recall": 0.376748950235388
+        },
+        "floodshadow": {
+          "hits": 0.02,
+          "hidden": 0,
+          "precision": 0.004,
+          "recall": 0.0013596491228070175
+        },
+        "runs": 100,
+        "hiddenWins": 0
+      }
+    },
+    {
+      "scenario": "Limited visibility",
+      "parameters": {
+        "id": 257,
+        "label": "Limited visibility",
+        "rain": 125,
+        "coverage": 12,
+        "disparity": 55
+      },
+      "k": 5,
+      "singleEpisode": {
+        "traditional": {
+          "selected": 5,
+          "hits": 5,
+          "precision": 1,
+          "recall": 0.23809523809523808,
+          "hidden": 0,
+          "clusters": 1
+        },
+        "floodshadow": {
+          "selected": 5,
+          "hits": 3,
+          "precision": 0.6,
+          "recall": 0.14285714285714285,
+          "hidden": 2,
+          "clusters": 1
+        }
+      },
+      "benchmark": {
+        "traditional": {
+          "hits": 4.99999999999999,
+          "hidden": 0,
+          "precision": 1.0000000000000007,
+          "recall": 0.28266050779888524
+        },
+        "floodshadow": {
+          "hits": 2.6799999999999993,
+          "hidden": 1.450000000000001,
+          "precision": 0.5360000000000004,
+          "recall": 0.14769176403676756
+        },
+        "runs": 100,
+        "hiddenWins": 82
+      }
+    }
+  ]
+}

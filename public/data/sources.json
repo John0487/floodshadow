@@ -1,0 +1,38 @@
+{
+  "retrieved": "2026-10-25T19:33:35.394Z",
+  "pilot": "Northwest Guayaquil pilot · 36 nearest eligible census sectors to [-79.938, -2.136]",
+  "selection": "Area between 0.015 and 1.8 km², ordered by centroid distance; independent of simulation outcomes.",
+  "census": {
+    "url": "https://idgn.ecuadorencifras.gob.ec/server/rest/services/Hosted/Marco_Geoestadistico_2022/FeatureServer/7",
+    "title": "INEC · Marco Geoestadístico 2022",
+    "type": "official geometry"
+  },
+  "flood": {
+    "url": "https://services7.arcgis.com/NWWHhu45fOJtCgG3/arcgis/rest/services/Zonas_Inundables_GYE/FeatureServer/0",
+    "title": "Municipal Zonas Inundables_GYE",
+    "type": "historical susceptibility footprint",
+    "limitation": "Public query service; reuse terms are not specified in item metadata. Not a current flood observation."
+  },
+  "method": "Historical overlap = intersection with the geometric union of municipal polygons divided by sector area; no double counting. Pilot halves split at median sector-centroid latitude; not administrative units. Neighbor contact uses intersection or a 1 m tolerance. Sector 01…36 are display aliases, not official neighborhood names.",
+  "events": {
+    "url": "https://sgrportal.gestionderiesgos.gob.ec/server/rest/services/Hosted/EVENTOS_X_LLUVIAS/FeatureServer/0",
+    "title": "Gestión de Riesgos · historical rainfall events",
+    "extent": [
+      -80.05,
+      -2.3,
+      -79.84,
+      -2
+    ],
+    "recordCount": 109,
+    "retrieved": "2026-10-25T19:33:35.602Z",
+    "fields": [
+      "objectid",
+      "canton",
+      "parroquia",
+      "sector",
+      "evento",
+      "fechadelevento"
+    ],
+    "limitation": "Historical registry, not a live incident feed; includes adjacent cantons and approximate locations."
+  }
+}

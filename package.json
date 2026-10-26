@@ -1,0 +1,40 @@
+{
+  "name": "floodshadow",
+  "private": true,
+  "version": "2.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1 --port 5174",
+    "demo:local": "node scripts/validate-demo.mjs && vite --host 127.0.0.1 --port 5174 --strictPort",
+    "demo:validate": "node scripts/validate-demo.mjs",
+    "data:update": "node scripts/update-local-data.mjs",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1 --port 5174",
+    "test": "node --test src/engine.test.js src/ui.integration.test.js src/city/analysis.test.js src/city/ui.test.js src/city/territory.test.js src/city/final-beta.test.js src/city/map-clarity.test.js src/city/live-weather.test.js src/city/rain-journey.test.js",
+    "data:city:fetch": "node scripts/research-city.mjs && node scripts/fetch-city.mjs && node scripts/geocode-city.mjs",
+    "data:city:geometry": "python scripts/prepare-city-geometry.py",
+    "data:city:build": "node scripts/build-city.mjs",
+    "data:areas:fetch": "node scripts/fetch-areas.mjs",
+    "data:areas:build": "python scripts/prepare-areas.py",
+    "forecast:capture": "node scripts/capture-forecast.mjs && node scripts/build-city.mjs",
+    "data:refresh": "node scripts/prepare-data.mjs",
+    "evaluate": "node scripts/evaluate-v03.mjs"
+  },
+  "dependencies": {
+    "@turf/turf": "^7.2.0",
+    "jspdf": "^4.2.1",
+    "lucide-react": "^0.468.0",
+    "maplibre-gl": "^6.16.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@babel/generator": "^8.0.6",
+    "@babel/parser": "^8.0.8",
+    "@babel/traverse": "^8.0.7",
+    "@babel/types": "^8.0.8",
+    "jsdom": "^30.1.3",
+    "prettier": "^3.9.10",
+    "vite": "^7.0.0"
+  }
+}

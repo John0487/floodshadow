@@ -1,0 +1,33 @@
+{
+  "status": "Supplementary exploratory tests defined after inspecting the main suite; not confirmatory held-out claims.",
+  "runs": 250,
+  "k": 5,
+  "particles": 2048,
+  "cases": [
+    {
+      "label": "No false reports",
+      "rain": 95,
+      "coverage": 80,
+      "disparity": 15,
+      "falseRate": 0,
+      "missingRate": 0.05,
+      "coupling": 1
+    },
+    {
+      "label": "Historical prior contradicted",
+      "rain": 90,
+      "coverage": 40,
+      "disparity": 75,
+      "falseRate": 0.1,
+      "missingRate": 0.12,
+      "coupling": 0.8,
+      "historyEffect": -1.5,
+      "rainEffect": 0.4
+    }
+  ],
+  "seeds": [
+    150000,
+    160000
+  ],
+  "model": "Unchanged v0.3 priors; no refitting to these conditions."
+}

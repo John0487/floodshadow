@@ -1,0 +1,74 @@
+{
+  "version": "0.3.0",
+  "runs": 500,
+  "particles": 2048,
+  "k": 5,
+  "cases": [
+    {
+      "id": 42,
+      "label": "Uneven reporting",
+      "rain": 95,
+      "coverage": 30,
+      "disparity": 70,
+      "falseRate": 0.1,
+      "missingRate": 0.06,
+      "coupling": 1,
+      "split": "reference scenarios"
+    },
+    {
+      "id": 108,
+      "label": "Widespread observation",
+      "rain": 75,
+      "coverage": 75,
+      "disparity": 15,
+      "falseRate": 0.06,
+      "missingRate": 0.03,
+      "coupling": 0.8,
+      "split": "reference scenarios"
+    },
+    {
+      "id": 257,
+      "label": "Limited visibility",
+      "rain": 125,
+      "coverage": 12,
+      "disparity": 85,
+      "falseRate": 0.12,
+      "missingRate": 0.1,
+      "coupling": 1.2,
+      "split": "reference scenarios"
+    },
+    {
+      "id": 901,
+      "label": "Held-out noisy and sparse",
+      "rain": 110,
+      "coverage": 45,
+      "disparity": 90,
+      "falseRate": 0.35,
+      "missingRate": 0.25,
+      "coupling": 0.35,
+      "split": "held-out generator configuration"
+    },
+    {
+      "id": 902,
+      "label": "Held-out weak rainfall / strong clustering",
+      "rain": 45,
+      "coverage": 55,
+      "disparity": 40,
+      "falseRate": 0.2,
+      "missingRate": 0.15,
+      "coupling": 1.8,
+      "split": "held-out generator configuration"
+    }
+  ],
+  "seedStarts": [
+    50000,
+    60000,
+    70000,
+    80000,
+    90000
+  ],
+  "modelSeed": 64319,
+  "bootstrap": "600 paired resamples of independent episodes; percentile 95% intervals",
+  "metrics": "all affected and hidden incidents; all-sector and observed-zero-report pools",
+  "limitation": "Hand-specified priors; conditional posterior, not locally calibrated."
+}

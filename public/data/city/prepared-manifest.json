@@ -1,0 +1,13 @@
+{
+  "sealedAt": "2026-10-26T04:15:00.313Z",
+  "files": {
+    "manifest.json": "535258e15dc51a89c2cf7fb6d9d7250366f5e069a8567442746144fc1db5694b",
+    "sectors.json": "71140b2a753c6cdef044f4cc9945bd4fb6582dcdaaa09c207109333480110a57",
+    "events.json": "8a7780bcc9879c30eae1e9111f4bd1d7687cd153a04a744d9d020014228a30e7",
+    "impacts.json": "97aa2b68c61a0c3943ecd0bf12f6dd0e8925b02a48fcb4bb800d013a261ee925",
+    "assessments.json": "3cd7e0a9be0cde64bfe5b461bb48d3f98a36f2e180dc27faa0812b1d85946422",
+    "sectors.map.geojson": "99367676e11749b6bc79374d67b6cfc19e7dccf4f2d001855b846765173f6cd2",
+    "zones.map.geojson": "a0d194154d7be995bf323364caadb96ae4c3200880abf72cc26e0ccaa6a965a2",
+    "areas.json": "081de8ec078766cbb43e2dcedf48ee99e4c68237cf9ac12dcab8e9b08a42e1f6"
+  }
+}

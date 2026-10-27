@@ -8,17 +8,20 @@ export default function useWeatherFeed() {
     [busy, setBusy] = useState(false),
     [now, setNow] = useState(Date.now);
   const request = useRef(null);
-  async function refresh() {
-    request.current?.abort();
+  async function refresh(force = false) {
+    if (request.current && !request.current.signal.aborted) return;
     const c = new AbortController();
     request.current = c;
     setBusy(true);
     const timeout = setTimeout(() => c.abort(), 25000);
     try {
-      const r = await fetch("/api/weather/live", {
-        cache: "no-store",
-        signal: c.signal,
-      });
+      const r = await fetch(
+        "/api/weather/live" + (force === true ? "?refresh=1" : ""),
+        {
+          cache: "no-store",
+          signal: c.signal,
+        },
+      );
       if (!r.ok) throw Error("Weather update unavailable");
       const p = await r.json();
       setPayload(p);
@@ -29,14 +32,25 @@ export default function useWeatherFeed() {
         setError(c.signal.aborted ? "Weather update timed out" : e.message);
     } finally {
       clearTimeout(timeout);
-      if (request.current === c) setBusy(false);
+      if (request.current === c) {
+        request.current = null;
+        setBusy(false);
+      }
     }
   }
   useEffect(() => {
     let alive = true;
     const contextAbort = new AbortController();
     refresh();
-    const update = setInterval(refresh, 300000),
+    const resume = () => {
+      if (document.visibilityState === "visible") {
+        setNow(Date.now());
+        refresh();
+      }
+    };
+    document.addEventListener("visibilitychange", resume);
+    window.addEventListener("focus", resume);
+    const update = setInterval(refresh, 60000),
       tick = setInterval(() => setNow(Date.now()), 30000);
     const sources = async () => {
       try {
@@ -69,6 +83,8 @@ export default function useWeatherFeed() {
       clearInterval(update);
       clearInterval(tick);
       clearInterval(more);
+      document.removeEventListener("visibilitychange", resume);
+      window.removeEventListener("focus", resume);
     };
   }, []);
   return { payload, context, reports, error, contextError, busy, now, refresh };

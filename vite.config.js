@@ -36,7 +36,13 @@ export default defineConfig({
             return;
           }
           try {
-            res.end(JSON.stringify(await weatherService.get()));
+            res.end(
+              JSON.stringify(
+                await weatherService.get({
+                  force: req.url?.includes("refresh=1"),
+                }),
+              ),
+            );
           } catch (e) {
             res.statusCode = 503;
             res.end(

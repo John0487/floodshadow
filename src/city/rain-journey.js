@@ -55,10 +55,10 @@ export function intensity(rate) {
     : rate === 0
       ? { label: "No rain estimated", color: "#e8f1f3" }
       : rate <= 2.5
-        ? { label: "Light rain estimated", color: "#b4d9e6" }
+        ? { label: "Light rain estimated", color: "#b9e4f7" }
         : rate <= 7.6
-          ? { label: "Moderate rain estimated", color: "#479fba" }
-          : { label: "Heavy rain estimated", color: "#e7a05e" };
+          ? { label: "Moderate rain estimated", color: "#65b5df" }
+          : { label: "Heavy rain estimated", color: "#236cad" };
 }
 export const intensityExpression = [
   "case",

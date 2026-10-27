@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { X } from "lucide-react";
 import { ForecastCheck } from "./RainJourney.jsx";
 import { localDate } from "./format.js";
+import WeatherTools from "./WeatherTools.jsx";
 export default function WeatherDetails({
   kind,
   onClose,
@@ -10,8 +11,28 @@ export default function WeatherDetails({
   data,
   onNavigate,
   onHistorical,
+  event,
+  rows,
+  active,
+  area,
+  records,
+  onRecords,
+  onEvent,
+  onLocation,
+  reports,
 }) {
   const close = useRef();
+  const title =
+    {
+      check: "Forecast review",
+      climate: "El Niño context",
+      history: "Event history",
+      tools: "Analysis tools",
+      passport: "Evidence & verification",
+      support: "Emergency Support",
+      scenario: "Scenario Explorer",
+      lab: "Research laboratory",
+    }[kind] ?? "Sources & evidence";
   useEffect(() => {
     const previous = document.activeElement;
     close.current?.focus();
@@ -45,29 +66,59 @@ export default function WeatherDetails({
         className="weather-drawer"
         role="dialog"
         aria-modal="true"
-        aria-label={
-          kind === "check"
-            ? "Forecast review"
-            : kind === "climate"
-              ? "El Niño context"
-              : "Sources and evidence"
-        }
+        aria-label={title}
         onClick={(e) => e.stopPropagation()}
       >
         <header>
-          <h2>
-            {kind === "check"
-              ? "Forecast review"
-              : kind === "climate"
-                ? "El Niño context"
-                : "Sources & evidence"}
-          </h2>
+          <h2>{title}</h2>
           <button ref={close} aria-label="Close details" onClick={onClose}>
             <X size={20} />
           </button>
         </header>
-        {kind === "check" ? (
-          <ForecastCheck context={context} events={data.events} />
+        {[
+          "history",
+          "tools",
+          "passport",
+          "support",
+          "scenario",
+          "lab",
+        ].includes(kind) ? (
+          <WeatherTools
+            kind={kind}
+            data={data}
+            event={event}
+            rows={rows}
+            active={active}
+            area={area}
+            records={records}
+            onRecords={onRecords}
+            onNavigate={onNavigate}
+            onEvent={onEvent}
+            onLocation={onLocation}
+            payload={payload}
+            reports={reports}
+          />
+        ) : kind === "check" ? (
+          <ForecastCheck
+            context={
+              event
+                ? {
+                    ...context,
+                    history: {
+                      ...context?.history,
+                      reports:
+                        context?.history?.reports?.filter(
+                          (r) =>
+                            Date.parse(r.observedAt) >=
+                              Date.parse(event.start) &&
+                            Date.parse(r.observedAt) <= Date.parse(event.end),
+                        ) ?? [],
+                    },
+                  }
+                : context
+            }
+            events={data.events}
+          />
         ) : kind === "climate" ? (
           <>
             <p>
@@ -176,8 +227,10 @@ export default function WeatherDetails({
             <h3>Coverage gaps</h3>
             <p>
               The checked RainViewer mask has no coverage at central Guayaquil.
-              INAMHI's station-list request timed out. Neither failure means
-              there is no rain.
+              INAMHI's station catalog is now reachable, including local gauges,
+              but its precipitation endpoint returned 403 and allows requests
+              only from its own viewer. No unavailable gauge readings are shown
+              as live observations.
             </p>
             <p>
               Old model data and station reports are labeled or excluded. “No
@@ -192,8 +245,9 @@ export default function WeatherDetails({
           </>
         )}
         <footer className="drawer-navigation">
+          <button onClick={() => onNavigate?.("tools")}>Analysis tools</button>
           <button onClick={() => onNavigate?.("check")}>Forecast review</button>
-          <button onClick={onHistorical}>Saved storms</button>
+          <button onClick={onHistorical}>Event history</button>
         </footer>
       </section>
     </div>

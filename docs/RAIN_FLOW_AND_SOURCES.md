@@ -1,10 +1,10 @@
 # A simpler rainfall workflow
 
-The connected screen now uses three stages in a sidebar: **Before**, **During**, and **After**. The map is the primary view. A compact side panel changes with the selected stage; source and methodology details open in a separate drawer. The older demonstration, verification, laboratory, scenarios and reports remain under **Saved storms**.
+The connected screen now uses three stages in a sidebar: **Before**, **During**, and **After**. The map is the primary view. A compact side panel changes with the selected stage; source and methodology details open in a separate drawer. Event history changes the evidence in this same workspace. Verification, laboratory, scenarios and reports remain in the **Analysis tools** drawer. See [the current unified-interface notes](UNIFIED_INTERFACE.md).
 
 ## Before
 
-The map shows the sum of the next six available hourly precipitation forecasts. Incomplete sums remain unavailable. The side panel shows the next six hourly rain probabilities and today's highest hourly probability from Open-Meteo's separate city-reference probability endpoint. The daily maximum is not presented as the probability of any rain throughout the whole day, and none of these percentages is a flood probability.
+By default the map shows the sum of the next six available hourly precipitation forecasts; a selector also exposes each individual future hour. Incomplete sums remain unavailable. The side panel shows the next six hourly rain probabilities and today's highest hourly probability from Open-Meteo's separate city-reference probability endpoint. The daily maximum is not presented as the probability of any rain throughout the whole day, and none of these percentages is a flood probability.
 
 The current INAMHI period is summarized in English using a small deterministic condition dictionary, with source wording retained in the data. INAMHI does not publish an issue timestamp in this response, so retrieval today cannot prove it was available before an earlier downpour. El Niño context is available on request, based on the official Ministry/ERFEN October summary with its source date; it does not become an automatic street-level risk multiplier.
 
@@ -28,7 +28,7 @@ Red markers and dashed outlines identify source-mentioned areas, without claimin
 - Municipal rainfall-related bulletin discovery: `https://www.guayaquil.gob.ec/wp-json/wp/v2/posts?search=lluvias&per_page=8&_fields=id,date_gmt,link,title`. A bulletin is not automatically classified as a current incident.
 - Recent source review: `https://www.extra.ec/noticia/guayaquil/tormenta-electrica-guayaquil-segura-ep-pide-permanecer-hogares-166090.html`.
 
-The local `/api/weather/context` endpoint refreshes these additional sources every 15 minutes, independently of the five-minute current-weather connection. It stores raw responses and normalized snapshots under `data-local/journey/`. Partial failures retain each previous source's dates and appear in the Sources drawer. Recent immutable local weather captures are loaded for forecast comparison. Historical prepared snapshots remain unchanged.
+The local `/api/weather/context` endpoint refreshes these additional sources every 15 minutes, independently of the one-minute current-weather connection. It stores raw responses and normalized snapshots under `data-local/journey/`. Partial failures retain each previous source's dates and appear in the Sources drawer. Recent immutable local weather captures are loaded for forecast comparison. Historical prepared snapshots remain unchanged.
 
 Research also checked RainViewer's coverage mask: the central Guayaquil pixel was opaque black, meaning no supported radar coverage there. Empty radar tiles were therefore not used to imply dry weather. The INAMHI station-list request timed out. The municipal `Eventos` layer concerns cultural events; the flood-events layer's most recent Guayaquil event is January 15, 2025. Neither was imported as live storm evidence.
 

@@ -22,7 +22,7 @@ export function createLiveWeatherService({
   directory = new URL("../data-local/weather/", import.meta.url),
   fetcher = fetch,
   clock = Date.now,
-  ttl = 300000,
+  ttl = 60000,
 } = {}) {
   let cached = null,
     pending = null,
@@ -103,8 +103,9 @@ export function createLiveWeatherService({
     return value;
   }
   return {
-    async get() {
-      if (cached && clock() - lastAttempt < ttl) return cached;
+    async get({ force = false } = {}) {
+      if (cached && clock() - lastAttempt < (force ? 60000 : ttl))
+        return cached;
       if (pending) return pending;
       pending = refresh();
       try {

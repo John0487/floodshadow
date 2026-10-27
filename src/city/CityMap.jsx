@@ -12,6 +12,11 @@ import {
 import { TYPE_LABELS, localDate } from "./format.js";
 import { stationCondition } from "./live-weather.js";
 import { intensityExpression } from "./rain-journey.js";
+import {
+  LIVE_RAIN_COLORS,
+  LIVE_RAIN_OPACITY,
+  reportMatchesArea,
+} from "./unified-weather.js";
 maplibre.setWorkerUrl(workerUrl);
 const URBAN = [
     [-80.095, -2.315],
@@ -78,13 +83,18 @@ export default function CityMap({
                   properties: {
                     ...f.properties,
                     value: rowValue(r, layer, hour),
+                    systemWatch: impacts.some(
+                      (i) =>
+                        i.origin === "system" &&
+                        i.sectorIds?.includes(r.sector.id),
+                    ),
                   },
                 }
               : null;
           })
           .filter(Boolean),
       ),
-    [geometry, rows, layer, hour],
+    [geometry, rows, layer, hour, impacts],
   );
   const areaData = useMemo(
     () =>
@@ -98,7 +108,18 @@ export default function CityMap({
               id: a.id,
               name: a.name,
               value: areaValue(a, rows, layer, hour),
-              reported: impacts.some((i) => i.areaId === a.id),
+              reported: impacts.some(
+                (i) => i.origin !== "system" && reportMatchesArea(i, a.id),
+              ),
+              userReported: impacts.some(
+                (i) => i.origin === "user" && reportMatchesArea(i, a.id),
+              ),
+              publishedReported: impacts.some(
+                (i) =>
+                  i.origin !== "user" &&
+                  i.origin !== "system" &&
+                  reportMatchesArea(i, a.id),
+              ),
             },
           })),
       ),
@@ -337,6 +358,60 @@ export default function CityMap({
             },
             { filter: ["==", ["get", "reported"], true] },
           );
+          const hatch = new Uint8Array(8 * 8 * 4);
+          for (let y = 0; y < 8; y++)
+            for (let x = 0; x < 8; x++) {
+              const i = (y * 8 + x) * 4;
+              hatch[i] = 185;
+              hatch[i + 1] = 56;
+              hatch[i + 2] = 74;
+              hatch[i + 3] = (x + y) % 8 < 2 ? 110 : 0;
+            }
+          m.addImage("user-report-hatch", { width: 8, height: 8, data: hatch });
+          m.addLayer(
+            {
+              id: "reported-area-tint",
+              type: "fill",
+              source: "areas",
+              filter: ["==", ["get", "reported"], true],
+              paint: {
+                "fill-color": "#b9384a",
+                "fill-opacity": [
+                  "case",
+                  ["get", "publishedReported"],
+                  0.24,
+                  0.1,
+                ],
+              },
+            },
+            "selection-line",
+          );
+          m.addLayer(
+            {
+              id: "user-report-pattern",
+              type: "fill",
+              source: "areas",
+              filter: ["==", ["get", "userReported"], true],
+              paint: {
+                "fill-pattern": "user-report-hatch",
+                "fill-opacity": 0.8,
+              },
+            },
+            "selection-line",
+          );
+          m.addLayer(
+            {
+              id: "system-watch-pattern",
+              type: "fill",
+              source: "sectors",
+              filter: ["==", ["get", "systemWatch"], true],
+              paint: {
+                "fill-pattern": "user-report-hatch",
+                "fill-opacity": 0.9,
+              },
+            },
+            "selection-line",
+          );
           m.on("click", "area-fill", (e) => {
             if (m.getZoom() >= 14) return;
             if (
@@ -491,11 +566,11 @@ export default function CityMap({
       ["linear"],
       ["coalesce", ["get", "value"], 0],
       0,
-      "#edf5f8",
+      "#ffffff",
       scale.upper * 0.5,
-      "#83becf",
+      "#6aadd8",
       scale.upper,
-      "#286b91",
+      "#082f64",
     ];
     const attention = [
       "step",
@@ -511,8 +586,8 @@ export default function CityMap({
       ["==", ["get", "value"], null],
       UNKNOWN,
       layer === "intensity"
-        ? intensityExpression
-        : layer === "priority"
+        ? LIVE_RAIN_COLORS
+        : layer === "priority" || layer === "aftermath"
           ? attention
           : layer === "history"
             ? [
@@ -543,16 +618,22 @@ export default function CityMap({
     m.setPaintProperty(
       "sector-fill",
       "fill-opacity",
-      ["support", "impacts", "verification"].includes(layer) ? 0.12 : 0.72,
+      ["intensity", "forecast"].includes(layer)
+        ? LIVE_RAIN_OPACITY
+        : ["support", "impacts", "verification"].includes(layer)
+          ? 0.12
+          : 0.72,
     );
     m.setPaintProperty(
       "area-fill",
       "fill-opacity",
-      detailed
-        ? 0.12
-        : ["support", "impacts", "verification"].includes(layer)
-          ? 0.15
-          : 0.58,
+      ["intensity", "forecast"].includes(layer)
+        ? 0
+        : detailed
+          ? 0.12
+          : ["support", "impacts", "verification"].includes(layer)
+            ? 0.15
+            : 0.58,
     );
     m.getSource("selection").setData(
       fc(
@@ -584,7 +665,10 @@ export default function CityMap({
       "visibility",
       !["before"].includes(phase) &&
         layer !== "forecast" &&
-        (important || layer === "impacts" || layer === "support")
+        (important ||
+          layer === "impacts" ||
+          layer === "support" ||
+          layer === "aftermath")
         ? "visible"
         : "none",
     );
@@ -614,7 +698,7 @@ export default function CityMap({
     m.setLayoutProperty(
       "facility-points",
       "visibility",
-      layer === "support" ? "visible" : "none",
+      layer === "support" || locationFocus ? "visible" : "none",
     );
     for (const x of labels.current) x.remove();
     labels.current = [];
@@ -660,6 +744,7 @@ export default function CityMap({
     geographyMode,
     data,
     cameraTick,
+    locationFocus,
   ]);
   useEffect(() => {
     if (!ready) return;

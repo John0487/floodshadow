@@ -10,7 +10,7 @@
     "data:update": "node scripts/update-local-data.mjs",
     "build": "vite build",
     "preview": "vite preview --host 127.0.0.1 --port 5174",
-    "test": "node --test src/engine.test.js src/ui.integration.test.js src/city/analysis.test.js src/city/ui.test.js src/city/territory.test.js src/city/final-beta.test.js src/city/map-clarity.test.js src/city/live-weather.test.js src/city/rain-journey.test.js",
+    "test": "node --test src/engine.test.js src/ui.integration.test.js src/city/analysis.test.js src/city/ui.test.js src/city/territory.test.js src/city/final-beta.test.js src/city/map-clarity.test.js src/city/live-weather.test.js src/city/rain-journey.test.js src/city/unified-weather.test.js src/city/weather-feed.test.js",
     "data:city:fetch": "node scripts/research-city.mjs && node scripts/fetch-city.mjs && node scripts/geocode-city.mjs",
     "data:city:geometry": "python scripts/prepare-city-geometry.py",
     "data:city:build": "node scripts/build-city.mjs",

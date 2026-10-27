@@ -57,7 +57,7 @@ export function areaValue(area, rows, layer, hour = null) {
     : null;
 }
 export function rowValue(r, layer, hour = null) {
-  if (layer === "priority") return r.assessment.score;
+  if (layer === "priority" || layer === 'aftermath') return r.assessment.score;
   if (layer === "history")
     return r.sector.historyOverlap == null
       ? null

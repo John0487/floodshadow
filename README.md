@@ -4,6 +4,8 @@ Understand rainfall. Anticipate impacts. Learn from every storm.
 
 A local rainfall-evidence beta for Guayaquil and Hack2Impact 2026, by team 3Jota. It connects expected rain, territorial context, reported places and questions that still need a check. It does not issue official emergency alerts or calibrated flood probabilities.
 
+Current interface: [one workspace, hourly forecasts, live refresh and evidence limits](docs/UNIFIED_INTERFACE.md).
+
 ## Main features
 
 The main interface now follows **Before / During / After** in a sidebar, with a large map and one concise summary. Hourly rain probabilities, official INAMHI guidance, independent airport history and recent source-reviewed problems are connected. Details are available on demand. See [rainfall workflow, sources and limits](docs/RAIN_FLOW_AND_SOURCES.md).
